@@ -1,10 +1,5 @@
 #!/bin/bash
-# Script for live HLS streaming lossy audio as AAC and/or archiving lossless audio as FLAC  
-
-# Pre-requisite
-# s3fs/blobfuse file system at $RAWFS with appropriate permissions for current user, to store raw audio
-# s3fs/blobfuse file system at $WEBFS with appropriate permissions for current user, to host HLS/encoded streaming
-# folder at $TMP with read/write for current user
+# Script for live HLS streaming lossy audio as AAC and archiving lossless audio as FLAC  
 
 RAWFS=/mnt/rd/pbsorca/raw
 WEBFS=/mnt/rd/pbsorca/web
@@ -33,11 +28,7 @@ mkdir -p $WEBFS/$NODE_NAME
 # Output timestamp for this (latest) stream
 echo $timestamp > $RAWFS/$NODE_NAME/last-started.txt
 
-echo "Node started at $timestamp"
-echo "Node is named $NODE_NAME"
-
-echo "Sampling from $AUDIO_HW_ID at $SAMPLE_RATE Hz..."
-echo "Asking ffmpeg to write $FLAC_DURATION minutes $SAMPLE_RATE Hz lo-res flac files while streaming in both DASH and HLS..." 
+echo "Node $NODE_NAME started at $timestamp"
 
 ## Streaming HLS segments and FLAC archive
 while true
