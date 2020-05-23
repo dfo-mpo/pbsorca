@@ -54,7 +54,8 @@ do
         #cutoffdate=`date -d "30 seconds ago" '+%Y-%m-%dT%H:%MZ'`
         az storage blob upload-batch -d "\$web" -s $RAWFS/$NODE_NAME --sas-token "$WEBFS_CLI_TOKEN" --account-name orcaaudio --only-show-errors
 
-        find $RAWFS/$NODE_NAME -daystart -maxdepth 1 -mmin +$FLAC_CULLTIME -type f -name "*.mp3" \
-            echo -exec rm -f {} \;
+        # Delete FLAC files older then CULLTIME
+        find $RAWFS/$NODE_NAME -daystart -maxdepth 1 -mmin +$FLAC_CULLTIME -type f -name "*.flac" \
+            -exec rm -f {} \;
     done
 done
